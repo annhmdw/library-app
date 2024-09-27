@@ -10,7 +10,7 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Add Row</h4>
-                            <a href="<?= base_url() ?>loan/insert"
+                            <a href="<?= base_url() ?>loan/add_form"
                                 class="btn btn-primary btn-round ms-auto">
                                 <i class="fa fa-plus"></i>
                                 Add

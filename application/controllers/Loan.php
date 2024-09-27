@@ -26,18 +26,23 @@ class Loan extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function insert()
+    public function add_form()
     {
         $data['title'] = 'Add Loan Form';
         $data['students'] = $this->Student_model->get_all_student();
         $data['books'] = $this->Book_model->available_book();
 
+        $this->load->view('templates/header', $data);
+        $this->load->view('book/loan/addLoan');
+        $this->load->view('templates/footer');
+    }
+
+    public function insert()
+    {
         $this->form_validation->set_rules('student_id', 'Student ID', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('book/loan/addLoan');
-            $this->load->view('templates/footer');
+            redirect('loan/add_form');
         } else {
 
             $id_student = $this->input->post('student_id');
@@ -66,12 +71,7 @@ class Loan extends CI_Controller
             } else {
                 $array_msg = array('status' => 'Failed', 'msg' => 'Student has reached the maximum limit of 3 borrowed books!', 'type' => 'error');
                 $this->session->set_flashdata('msg', $array_msg);
-                $data['title'] = 'Add Loan Form';
-                $data['students'] = $this->Student_model->get_all_student();
-                $data['books'] = $this->Book_model->available_book();
-                $this->load->view('templates/header', $data);
-                $this->load->view('book/loan/addLoan');
-                $this->load->view('templates/footer');
+                redirect('loan/add_form');
             }
         }
     }
