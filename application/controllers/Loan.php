@@ -43,6 +43,7 @@ class Loan extends CI_Controller
             $id_student = $this->input->post('student_id');
             $id_book = $this->input->post('book_id');
             $student = $this->Student_model->get_student_by_id($id_student);
+            $count_student = $this->Loan_model->count_student_id($id_student);
 
             $now = date('YmdHis');
             $expired_date = date('YmdHis', strtotime('+3 days', strtotime($now)));
@@ -57,10 +58,21 @@ class Loan extends CI_Controller
                 'expired_date' => $expired_date,
             );
 
-            $this->Loan_model->insert_loan($data);
-            $array_msg = array('status' => 'Success', 'msg' => 'Loan data has been added!', 'type' => 'success');
-            $this->session->set_flashdata('msg', $array_msg);
-            redirect('loan');
+            if ($count_student < 3) {
+                $this->Loan_model->insert_loan($data);
+                $array_msg = array('status' => 'Success', 'msg' => 'Loan data has been added!', 'type' => 'success');
+                $this->session->set_flashdata('msg', $array_msg);
+                redirect('loan');
+            } else {
+                $array_msg = array('status' => 'Failed', 'msg' => 'Student has reached the maximum limit of 3 borrowed books!', 'type' => 'error');
+                $this->session->set_flashdata('msg', $array_msg);
+                $data['title'] = 'Add Loan Form';
+                $data['students'] = $this->Student_model->get_all_student();
+                $data['books'] = $this->Book_model->available_book();
+                $this->load->view('templates/header', $data);
+                $this->load->view('book/loan/addLoan');
+                $this->load->view('templates/footer');
+            }
         }
     }
 
@@ -71,5 +83,4 @@ class Loan extends CI_Controller
         $this->session->set_flashdata('msg', $array_msg);
         redirect('loan');
     }
-
 }
