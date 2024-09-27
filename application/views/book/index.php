@@ -2,7 +2,6 @@
     <div class="page-inner">
         <div class="page-header">
             <h3 class="fw-bold mb-3"><?= $title; ?></h3>
-
         </div>
         <div class="row">
             <div class="col-md-12">

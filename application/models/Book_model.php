@@ -89,12 +89,26 @@ class Book_model extends CI_model
         return $query->num_rows();
     }
 
-    public function get_books_not_in_loans()
+    public function available_book()
     {
         $this->db->select('books.id_book, books.book_name');
         $this->db->from('books');
         $this->db->where('books.book_status', 1);
         $this->db->where_not_in('books.id_book', 'SELECT DISTINCT book_id FROM book_loans', FALSE);
         return $this->db->get()->result();
+    }
+
+    public function count_available_book()
+    {
+        $this->db->select('books.id_book, books.book_name');
+        $this->db->from('books');
+        $this->db->where('books.book_status', 1);
+        $this->db->where_not_in('books.id_book', 'SELECT DISTINCT book_id FROM book_loans', FALSE);
+        return $this->db->get()->num_rows();
+    }
+
+    public function count_book() 
+    {
+        return $this->db->get('books')->num_rows();
     }
 }

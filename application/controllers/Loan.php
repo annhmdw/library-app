@@ -30,7 +30,7 @@ class Loan extends CI_Controller
     {
         $data['title'] = 'Add Loan Form';
         $data['students'] = $this->Student_model->get_all_student();
-        $data['books'] = $this->Book_model->get_books_not_in_loans();
+        $data['books'] = $this->Book_model->available_book();
 
         $this->form_validation->set_rules('student_id', 'Student ID', 'required');
 

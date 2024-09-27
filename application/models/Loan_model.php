@@ -56,4 +56,9 @@ class Loan_model extends CI_model
         $query = $this->db->get('book_loans');
         return $query->num_rows();
     }
+
+    public function count_loan()
+    {
+        return $this->db->get('book_loans')->num_rows();
+    }
 }

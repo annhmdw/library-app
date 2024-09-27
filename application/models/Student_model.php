@@ -53,4 +53,9 @@ class Student_model extends CI_model
         $query = $this->db->get('students');
         return $query->num_rows();
     }
+
+    public function count_student() 
+    {
+        return $this->db->get('students')->num_rows();
+    }
 }
