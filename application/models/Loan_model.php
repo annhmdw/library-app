@@ -4,7 +4,7 @@ class Loan_model extends CI_model
 {
     public function get_all_loan()
     {
-        $this->db->select('*,  students.student_name as borrower_name');
+        $this->db->select('*,  students.student_name as borrower_name, students.nrp as nrp, books.book_name as book_name');
         $this->db->from('book_loans');
         $this->db->join('students', 'students.id_student = book_loans.student_id');
         $this->db->join('books', 'books.id_book = book_loans.book_id');
@@ -35,7 +35,6 @@ class Loan_model extends CI_model
             "bookCategory" => $this->input->post('bookCategory', true),
             "publisher" => $this->input->post('publisher', true),
             "cover" => $this->input->post('cover', true),
-            "cover" => $this->input->post('cover', true),
             "bookStatus" => $this->input->post('bookStatus', true),
         ];
 
@@ -43,16 +42,16 @@ class Loan_model extends CI_model
         $this->db->update('book_loans', $data);
     }
 
-    public function count_book_id( $value)
+    public function count_book_id($id)
     {
-        $this->db->where('book_id', $value);
+        $this->db->where('book_id', $id);
         $query = $this->db->get('book_loans');
         return $query->num_rows();
     }
 
-    public function count_student_id( $value)
+    public function count_student_id($id)
     {
-        $this->db->where('student_id', $value);
+        $this->db->where('student_id', $id);
         $query = $this->db->get('book_loans');
         return $query->num_rows();
     }

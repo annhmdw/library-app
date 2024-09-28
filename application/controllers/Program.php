@@ -18,7 +18,6 @@ class Program extends CI_Controller {
         $this->load->view('templates/header', $data);
         $this->load->view('program/index', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function insert()
@@ -30,13 +29,12 @@ class Program extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $array_msg = array('status' => 'Failed', 'msg' => 'Program data failed to edit!', 'type' => 'error');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('program');
         } else {
             $this->Program_model->insert_program();
             $array_msg = array('status' => 'Success', 'msg' => 'Program data has been added!', 'type' => 'success');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('program');
         }
+        redirect('program');
     }
 
     public function delete($id)
@@ -47,12 +45,11 @@ class Program extends CI_Controller {
             $this->Program_model->delete_program($id);
             $array_msg = array('status' => 'Success', 'msg' => 'Program data has been successfully deleted!', 'type' => 'success');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('program');
         } else {
             $array_msg = array('status' => 'Failed', 'msg' => 'Program data failed to delete because is still active!', 'type' => 'error');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('program');
         };
+        redirect('program');
     }
 
     public function edit()
@@ -62,13 +59,12 @@ class Program extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $array_msg = array('status' => 'Failed', 'msg' => 'Program data failed to edit!', 'type' => 'error');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('program');
         } else {
             $this->Program_model->edit_program();
             $array_msg = array('status' => 'Success', 'msg' => 'Program data has been edited!', 'type' => 'success');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('program');
         }
+        redirect('program');
     }
 
     public function update_status($id) {

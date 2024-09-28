@@ -54,10 +54,6 @@
                                     <div class="form-group">
                                         <label for="userfile">Cover</label>
                                         <input type="file" class="filepond" name="book_cover" accept="image/webp, image/jpeg, image/png, image/jpg" />
-                                        <?php if (isset($upload_error)): ?>
-                                            <small class="text-danger"><?= $upload_error ?></small>
-                                        <?php endif; ?>
-                                        <small id="name" class="form-text text-danger"><?= form_error('book_cover') ?></small>
                                     </div>
                                 </div>
                             </div>

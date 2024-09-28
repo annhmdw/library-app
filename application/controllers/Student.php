@@ -1,6 +1,7 @@
 <?php
 
-class Student extends CI_Controller {
+class Student extends CI_Controller
+{
 
     public function __construct()
     {
@@ -10,15 +11,15 @@ class Student extends CI_Controller {
         $this->load->library('form_validation');
     }
 
-    public function index() {
+    public function index()
+    {
         $this->load->model('Student_model');
         $data['students'] = $this->Student_model->get_all_student();
-        
+
         $data['title'] = 'Student List';
         $this->load->view('templates/header', $data);
         $this->load->view('student/index', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function insert()
@@ -46,7 +47,7 @@ class Student extends CI_Controller {
     {
         $this->Student_model->delete_student($id);
         $array_msg = array('status' => 'Success', 'msg' => 'Student data has been deleted!', 'type' => 'success');
-            $this->session->set_flashdata('msg', $array_msg);
+        $this->session->set_flashdata('msg', $array_msg);
         redirect('student');
     }
 
@@ -71,7 +72,4 @@ class Student extends CI_Controller {
             redirect('student');
         }
     }
-
 }
-
-?>

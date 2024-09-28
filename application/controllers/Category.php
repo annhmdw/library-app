@@ -34,13 +34,12 @@ class Category extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $array_msg = array('status' => 'Failed', 'msg' => 'Category data failed to added!', 'type' => 'error');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('category');
         } else {
             $this->Category_model->insert_category();
             $array_msg = array('status' => 'Success', 'msg' => 'Category data has been added!', 'type' => 'success');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('category');
         }
+        redirect('category');
     }
 
     public function delete($id)
@@ -50,12 +49,11 @@ class Category extends CI_Controller
             $this->Category_model->delete_category($id);
             $array_msg = array('status' => 'Success', 'msg' => 'Category data has been successfully deleted!', 'type' => 'success');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('Category');
         } else {
             $array_msg = array('status' => 'Failed', 'msg' => 'Category data failed to delete because is still active!', 'type' => 'error');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('Category');
         };
+        redirect('Category');
     }
 
     public function edit()
@@ -66,16 +64,16 @@ class Category extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $array_msg = array('status' => 'Failed', 'msg' => 'Category data failed to edited!', 'type' => 'error');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('category');
         } else {
             $this->Category_model->edit_category();
             $array_msg = array('status' => 'Success', 'msg' => 'Category data has been edited!', 'type' => 'success');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('category');
         }
+        redirect('category');
     }
 
-    public function update_status($id) {
+    public function update_status($id)
+    {
 
         $count = $this->Book_model->count_category_id($id);
 
@@ -85,7 +83,7 @@ class Category extends CI_Controller
         } else {
             $response =  false;
         };
-        
+
         echo json_encode($response);
     }
 }

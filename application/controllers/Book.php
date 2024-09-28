@@ -59,12 +59,11 @@ class Book extends CI_Controller
             $this->Book_model->delete_book($id);
             $array_msg = array('status' => 'Success', 'msg' => 'Book data has been successfully deleted !', 'type' => 'success');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('Book');
         } else {
             $array_msg = array('status' => 'Failed', 'msg' => 'Book data failed to delete because is still active!', 'type' => 'error');
             $this->session->set_flashdata('msg', $array_msg);
-            redirect('Book');
         };
+        redirect('Book');
     }
 
     public function edit($id)
@@ -80,13 +79,26 @@ class Book extends CI_Controller
             $this->load->view('book/editBook', $data);
             $this->load->view('templates/footer');
         } else {
-            if ($this->input->post('book_cover') > '') {
+            if ($this->input->post('book_cover') != '') {
                 $book = $this->Book_model->get_book_by_id($id);
                 if ($book && $book->cover && file_exists($book->cover)) {
                     unlink($book->cover);
                 }                
+            };
+
+            $data = [
+                'book_name' => $this->input->post('book_name'),
+                'publisher' => $this->input->post('publisher'),
+                'category_id' => $this->input->post('category_id'),
+            ];
+
+            if ($this->input->post('book_cover')) {
+                $data = [
+                    'cover' => $this->input->post('book_cover') // This will be the URL returned by FilePond
+                ];
             }
-            $this->Book_model->edit_book();
+
+            $this->Book_model->edit_book($data);
             $array_msg = array('status' => 'Success', 'msg' => 'Category data has been edited!', 'type' => 'success');
             $this->session->set_flashdata('msg', $array_msg);
             redirect('Book');
@@ -128,44 +140,6 @@ class Book extends CI_Controller
             $file_name = $upload_data['file_name'];
             $file_url = './uploads/' . $file_name;
             echo json_encode($file_url);
-        }
-    }
-
-    public function revertFile() {
-        // Only allow DELETE requests
-        if ($this->input->server('REQUEST_METHOD') == 'DELETE') {
-            
-            // Get the filename from the request body
-            $filename = file_get_contents('php://input');
-            
-            // Specify the directory where temporary files are stored
-            $filePath = './uploads/' . $filename;
-
-            // Check if the file exists
-            if (file_exists($filePath)) {
-                // Delete the file
-                if (unlink($filePath)) {
-                    // Respond with success
-                    $this->output
-                        ->set_status_header(200)
-                        ->set_output(json_encode(['message' => 'File deleted successfully']));
-                } else {
-                    // Error deleting the file
-                    $this->output
-                        ->set_status_header(500)
-                        ->set_output(json_encode(['error' => 'File could not be deleted']));
-                }
-            } else {
-                // File not found
-                $this->output
-                    ->set_status_header(404)
-                    ->set_output(json_encode(['error' => 'File not found']));
-            }
-        } else {
-            // If the request method is not DELETE, return 405 Method Not Allowed
-            $this->output
-                ->set_status_header(405)
-                ->set_output(json_encode(['error' => 'Method Not Allowed']));
         }
     }
 }

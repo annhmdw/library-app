@@ -152,7 +152,7 @@
     $('.filepond').filepond({
         allowMultiple: false,
         acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
-        allowImagePPreview: true,
+        allowImagePreview: true,
         imagePreviewHeight: 150,
         maxFileSize: '2MB',
         allowRevert: true,
