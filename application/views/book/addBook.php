@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="card-action">
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" id="submit-btn" class="btn btn-success">Submit</button>
                                 <a href="<?= base_url() ?>book" class="btn btn-danger">Batal</a>
                             </div>
                         </div>

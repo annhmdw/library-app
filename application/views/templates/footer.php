@@ -156,6 +156,8 @@
         imagePreviewHeight: 150,
         maxFileSize: '2MB',
         allowRevert: true,
+        allowProcess: false,
+        instantUpload: false,
         server: {
             process: {
                 url: '<?= base_url("book/upload") ?>',
@@ -183,6 +185,14 @@
         }
     });
 
+    document.getElementById('submit-btn').addEventListener('click', function() {
+        // Proses semua file di FilePond
+        pond.processFiles().then(() => {
+            console.log('Semua file berhasil di-upload');
+        }).catch((error) => {
+            console.error('Error saat upload file:', error);
+        });
+    });
 
     /* Set the book status */
     $('.status-book').on('change', function() {
